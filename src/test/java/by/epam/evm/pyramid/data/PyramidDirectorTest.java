@@ -1,0 +1,117 @@
+package by.epam.evm.pyramid.data;
+
+import by.epam.evm.pyramid.model.Point;
+import by.epam.evm.pyramid.model.Pyramid;
+import org.junit.Assert;
+import org.junit.Test;
+import org.mockito.Mockito;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
+
+public class PyramidDirectorTest {
+
+    private final static List<Point> POINTS = new ArrayList<>();
+    private final static List<String> DATA = new ArrayList<>();
+    private final static Pyramid PYRAMID;
+
+    static {
+        Point pointA = new Point(2.3, -3.5, 2);
+        Point pointB = new Point(2, -3.5, 5);
+        Point pointC = new Point(-2, -3, 2);
+        Point pointD = new Point(2.3, -3.5, 2);
+        Point pointH = new Point(2.3, -3.5, 2);
+        POINTS.add(pointA);
+        POINTS.add(pointB);
+        POINTS.add(pointC);
+        POINTS.add(pointD);
+        POINTS.add(pointH);
+        DATA.add("A<2.3;-3.5;2>B<2;-3.5;5>C<-2;-3;2>D<2.3;-3.5;2>H<2.3;-3.5;2>");
+        PYRAMID = new Pyramid(pointA, pointB, pointC, pointD, pointH);
+    }
+
+
+    @Test
+    public void testCompleteShouldReturnListPyramidsWhenDataAndPyramidValid() throws DataException {
+        //given
+        DataReader reader = Mockito.mock(DataReader.class);
+        when(reader.read()).thenReturn(DATA);
+        DataValidator dataValidator = Mockito.mock(DataValidator.class);
+        when(dataValidator.isValid(anyString())).thenReturn(true);
+        PointParser parser = Mockito.mock(PointParser.class);
+        when(parser.parse(anyString())).thenReturn(POINTS);
+        PyramidCreator creator = Mockito.mock(PyramidCreator.class);
+        Optional<Pyramid> optional = Optional.of(PYRAMID);
+        when(creator.create(anyList())).thenReturn(optional);
+
+        PyramidDirector director = new PyramidDirector(reader, dataValidator, parser, creator);
+        List<Pyramid> expected = new ArrayList<>();
+        expected.add(PYRAMID);
+
+        //when
+        List<Pyramid> actual = director.complete();
+        //then
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testCompleteShouldReturnEmptyListPyramidsWhenDataInvalid() throws DataException {
+        //given
+        DataReader reader = Mockito.mock(DataReader.class);
+        when(reader.read()).thenReturn(DATA);
+        DataValidator dataValidator = Mockito.mock(DataValidator.class);
+        when(dataValidator.isValid(anyString())).thenReturn(false);
+        PointParser parser = Mockito.mock(PointParser.class);
+        PyramidCreator creator = Mockito.mock(PyramidCreator.class);
+
+        PyramidDirector director = new PyramidDirector(reader, dataValidator, parser, creator);
+        List<Pyramid> expected = new ArrayList<>();
+
+        //when
+        List<Pyramid> actual = director.complete();
+        //then
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testCompleteShouldReturnEmptyListPyramidsWhenPyramidInvalid() throws DataException {
+        //given
+        DataReader reader = Mockito.mock(DataReader.class);
+        when(reader.read()).thenReturn(DATA);
+        DataValidator dataValidator = Mockito.mock(DataValidator.class);
+        when(dataValidator.isValid(anyString())).thenReturn(true);
+        PointParser parser = Mockito.mock(PointParser.class);
+        when(parser.parse(anyString())).thenReturn(POINTS);
+        PyramidCreator creator = Mockito.mock(PyramidCreator.class);
+        Optional<Pyramid> optional = Optional.empty();
+        when(creator.create(anyList())).thenReturn(optional);
+
+        PyramidDirector director = new PyramidDirector(reader, dataValidator, parser, creator);
+        List<Pyramid> expected = new ArrayList<>();
+
+        //when
+        List<Pyramid> actual = director.complete();
+        //then
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test(expected = DataException.class) //then
+    public void testCompleteShouldThrowExceptionWhenFileNotFound() throws DataException {
+        //given
+        DataReader reader = Mockito.mock(DataReader.class);
+        when(reader.read()).thenThrow(DataException.class);
+        DataValidator dataValidator = Mockito.mock(DataValidator.class);
+        PointParser parser = Mockito.mock(PointParser.class);
+        PyramidCreator creator = Mockito.mock(PyramidCreator.class);
+
+        PyramidDirector director = new PyramidDirector(reader, dataValidator, parser, creator);
+        //when
+        List<Pyramid> actual = director.complete();
+    }
+
+}
