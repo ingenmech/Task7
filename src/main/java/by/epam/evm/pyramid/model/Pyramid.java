@@ -83,16 +83,20 @@ public class Pyramid {
             return false;
         }
         Pyramid pyramid = (Pyramid) o;
-        if (pointA != null ? !pointA.equals(pyramid.pointA) : pyramid.pointA != null) {
+
+        if (id != pyramid.id){
             return false;
         }
-        if (pointB != null ? !pointB.equals(pyramid.pointB) : pyramid.pointB != null) {
+        if (pointA != null ? !pointA.equals(pyramid.pointA) : pyramid.pointA != null){
             return false;
         }
-        if (pointC != null ? !pointC.equals(pyramid.pointC) : pyramid.pointC != null) {
+        if (pointB != null ? !pointB.equals(pyramid.pointB) : pyramid.pointB != null){
             return false;
         }
-        if (pointD != null ? !pointD.equals(pyramid.pointD) : pyramid.pointD != null) {
+        if (pointC != null ? !pointC.equals(pyramid.pointC) : pyramid.pointC != null){
+            return false;
+        }
+        if (pointD != null ? !pointD.equals(pyramid.pointD) : pyramid.pointD != null){
             return false;
         }
         return apexPoint != null ? apexPoint.equals(pyramid.apexPoint) : pyramid.apexPoint == null;
@@ -100,7 +104,8 @@ public class Pyramid {
 
     @Override
     public int hashCode() {
-        int result = pointA != null ? pointA.hashCode() : 0;
+        int result = id;
+        result = 31 * result + (pointA != null ? pointA.hashCode() : 0);
         result = 31 * result + (pointB != null ? pointB.hashCode() : 0);
         result = 31 * result + (pointC != null ? pointC.hashCode() : 0);
         result = 31 * result + (pointD != null ? pointD.hashCode() : 0);
@@ -111,7 +116,8 @@ public class Pyramid {
     @Override
     public String toString() {
         return "Pyramid{" +
-                "pointA=" + pointA +
+                "id=" + id +
+                ", pointA=" + pointA +
                 ", pointB=" + pointB +
                 ", pointC=" + pointC +
                 ", pointD=" + pointD +
