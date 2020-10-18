@@ -11,11 +11,13 @@ import java.util.Optional;
 public class PyramidCreator {
 
     private final static Logger LOGGER = LogManager.getLogger(PyramidCreator.class);
+
     private final static int POINT_A = 0;
     private final static int POINT_B = 1;
     private final static int POINT_C = 2;
     private final static int POINT_D = 3;
     private final static int POINT_H = 4;
+
     private final PyramidValidator pyramidValidator;
 
 

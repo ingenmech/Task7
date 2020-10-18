@@ -2,13 +2,14 @@ package by.epam.evm.pyramid.model;
 
 public class Pyramid {
 
+    private int id;
     private Point pointA;
     private Point pointB;
     private Point pointC;
     private Point pointD;
     private Point apexPoint;
 
-    public  Pyramid(){
+    public Pyramid() {
 
     }
 
@@ -18,6 +19,19 @@ public class Pyramid {
         this.pointC = pointC;
         this.pointD = pointD;
         this.apexPoint = apexPoint;
+    }
+
+    public Pyramid(int id, Point pointA, Point pointB, Point pointC, Point pointD, Point apexPoint) {
+        this(pointA, pointB, pointC, pointD, apexPoint);
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Point getPointA() {

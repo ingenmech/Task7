@@ -1,11 +1,11 @@
-package by.epam.evm.pyramid.data.observer;
+package by.epam.evm.pyramid.observer;
 
 import by.epam.evm.pyramid.logic.PyramidCalculator;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class PyramidObserver implements Observer{
+public class PyramidObserver implements Observer {
 
     private final static Observer INSTANCE = new PyramidObserver();
     private Map<Integer, Parameters> map = new HashMap<>();
@@ -16,11 +16,11 @@ public class PyramidObserver implements Observer{
     }
 
     // package private
-    PyramidObserver (PyramidCalculator calculator){
+    PyramidObserver(PyramidCalculator calculator) {
         this.calculator = calculator;
     }
 
-    public static Observer getInstance(){
+    public static Observer getInstance() {
         return INSTANCE;
     }
 

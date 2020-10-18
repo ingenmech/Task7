@@ -8,12 +8,15 @@ public class IdComparator implements Comparator<Pyramid> {
 
     @Override
     public int compare(Pyramid firstPyramid, Pyramid secondPyramid) {
+
         int firstId = firstPyramid.getId();
         int secondId = secondPyramid.getId();
         int result = 0;
-        if (firstId > secondId){
+
+        if (firstId > secondId) {
             result = 1;
-        } if(firstId < secondId){
+        }
+        if (firstId < secondId) {
             result = -1;
         }
         return result;

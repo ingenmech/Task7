@@ -20,7 +20,7 @@ public class FileDataReaderTest {
         //when
         List<String> actual = reader.read();
         //then
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals(expected, actual);
     }
 
     @Test(expected = DataException.class)//then

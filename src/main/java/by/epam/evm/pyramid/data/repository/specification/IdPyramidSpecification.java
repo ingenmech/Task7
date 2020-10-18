@@ -2,7 +2,7 @@ package by.epam.evm.pyramid.data.repository.specification;
 
 import by.epam.evm.pyramid.model.Pyramid;
 
-public class IdPyramidSpecification implements PyramidSpecification{
+public class IdPyramidSpecification implements PyramidSpecification {
 
     private int id;
 

@@ -1,4 +1,4 @@
-package by.epam.evm.pyramid.data.observer;
+package by.epam.evm.pyramid.observer;
 
 import by.epam.evm.pyramid.model.Point;
 import by.epam.evm.pyramid.model.Pyramid;
@@ -15,6 +15,11 @@ public class PyramidObservable extends Pyramid implements Observable {
         for (Observer observer : observers) {
             observer.notify(this);
         }
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
     }
 
     public int getId() {
@@ -55,8 +60,5 @@ public class PyramidObservable extends Pyramid implements Observable {
         notifyObservers();
     }
 
-    @Override
-    public void addObserver(Observer observer) {
-        observers.add(observer);
-    }
+
 }

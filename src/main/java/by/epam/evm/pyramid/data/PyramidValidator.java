@@ -1,6 +1,6 @@
 package by.epam.evm.pyramid.data;
 
-import by.epam.evm.pyramid.logic.VectorCalculator;
+import by.epam.evm.pyramid.logic.PyramidCalculator;
 import by.epam.evm.pyramid.model.Point;
 import by.epam.evm.pyramid.model.Pyramid;
 
@@ -13,7 +13,12 @@ public class PyramidValidator {
     private final static int POINT_C = 2;
     private final static int POINT_D = 3;
     private final static int POINT_H = 4;
-    private final VectorCalculator vector = new VectorCalculator();
+
+    private final PyramidCalculator calculator;
+
+    public PyramidValidator(PyramidCalculator calculator) {
+        this.calculator = calculator;
+    }
 
     public boolean isPyramid(List<Point> points) {
         Point pointA = points.get(POINT_A);
@@ -21,30 +26,30 @@ public class PyramidValidator {
         Point pointC = points.get(POINT_C);
         Point pointD = points.get(POINT_D);
         Point apexH = points.get(POINT_H);
-        Point middleAC = vector.calculateMiddlePoint(pointA, pointC);
-        Point middleBD = vector.calculateMiddlePoint(pointB, pointD);
 
-        boolean key = (middleAC.equals(middleBD)) ? true : false;
+        Point middleAC = calculator.calculateMiddlePoint(pointA, pointC);
+        Point middleBD = calculator.calculateMiddlePoint(pointB, pointD);
+        boolean key = middleAC.equals(middleBD);
 
         if (key) {
-            double lengthAC = vector.calculateLengthBetweenPoints(pointA, pointC);
-            double lengthBD = vector.calculateLengthBetweenPoints(pointB, pointD);
-            key = (lengthAC == lengthBD) ? true : false;
+            double lengthAC = calculator.calculateLengthBetweenPoints(pointA, pointC);
+            double lengthBD = calculator.calculateLengthBetweenPoints(pointB, pointD);
+            key = lengthAC == lengthBD;
         }
 
         Point vectorAC = null;
         Point vectorBD = null;
         if (key) {
-            vectorAC = vector.calculateVector(pointA, pointC);
-            vectorBD = vector.calculateVector(pointB, pointD);
-            boolean isNormal = vector.scalarMultiplyVectors(vectorAC, vectorBD) == 0;
-            key = (isNormal) ? true : false;
+            vectorAC = calculator.calculateVector(pointA, pointC);
+            vectorBD = calculator.calculateVector(pointB, pointD);
+            key = calculator.scalarMultiplyVectors(vectorAC, vectorBD) == 0;
         }
+
         if (key) {
-            Point vectorApex = vector.calculateVector(middleAC, apexH);
-            boolean isNormalToAC = vector.scalarMultiplyVectors(vectorAC, vectorApex) == 0;
-            boolean isNormalToBD = vector.scalarMultiplyVectors(vectorBD, vectorApex) == 0;
-            key = (isNormalToAC && isNormalToBD) ? true : false;
+            Point vectorApex = calculator.calculateVector(middleAC, apexH);
+            boolean isNormalToAC = calculator.scalarMultiplyVectors(vectorAC, vectorApex) == 0;
+            boolean isNormalToBD = calculator.scalarMultiplyVectors(vectorBD, vectorApex) == 0;
+            key = isNormalToAC && isNormalToBD;
         }
         return key;
     }

@@ -37,5 +37,4 @@
         <maven.compiler.source>1.14</maven.compiler.source>
         <maven.compiler.target>1.14</maven.compiler.target>
     </properties>
-
 </project>

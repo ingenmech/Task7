@@ -14,14 +14,11 @@ public class ComparatorFactory {
             case ID:
                 comparator = new IdComparator();
                 break;
-            case NAME:
-                comparator = new NameComparator();
-                break;
             case POINT:
                 comparator = new PointComparator();
                 break;
             default:
-                throw new InputTypeException(String.format("Input type %s is not exist", type));
+                throw new IllegalArgumentException(String.format("Input type %s is not exist", type));
         }
         return comparator;
     }

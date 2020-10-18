@@ -17,8 +17,7 @@ public class PyramidCalculator {
     private final static Point PLANE_VECTOR_XOY = new Point(0, 0, 1);
     private final static Point PLANE_VECTOR_ZOY = new Point(1, 0, 0);
     private final static Point PLANE_VECTOR_XOZ = new Point(0, 1, 0);
-
-    private final VectorCalculator calculator = new VectorCalculator();
+    private final static double COORDINATE_ZERO = 0;
 
     public double calculateArea(Pyramid pyramid) {
         Point baseA = pyramid.getPointA();
@@ -27,21 +26,27 @@ public class PyramidCalculator {
         Point baseD = pyramid.getPointD();
         Point apexH = pyramid.getApexPoint();
 
-        Point vectorAH = calculator.calculateVector(baseA, apexH);
-        Point vectorAD = calculator.calculateVector(baseA, baseD);
+        Point vectorAH = calculateVector(baseA, apexH);
+        Point vectorAD = calculateVector(baseA, baseD);
 
         double baseArea = calculateBaseArea(baseA, baseB, baseC, baseD);
-        double sideArea = calculator.calculateAreaByVectors(vectorAH, vectorAD) * 2; // function for four side
+        double sideArea = calculateAreaByVectors(vectorAH, vectorAD) * 2; // function for four side
 
         return baseArea + sideArea;
     }
 
     private double calculateBaseArea(Point baseA, Point baseB, Point baseC, Point baseD) {
-        Point vectorAC = calculator.calculateVector(baseA, baseC);
-        Point vectorBD = calculator.calculateVector(baseB, baseD);
-        double baseArea = calculator.calculateAreaByVectors(vectorAC, vectorBD);
+        Point vectorAC = calculateVector(baseA, baseC);
+        Point vectorBD = calculateVector(baseB, baseD);
 
-        return baseArea;
+        return calculateAreaByVectors(vectorAC, vectorBD);
+    }
+
+    private double calculateAreaByVectors(Point vectorA, Point vectorB) {
+
+        Point multiplyABCD = multiplyVectors(vectorA, vectorB);
+
+        return calculateLengthBetweenPoints(ZERO_POINT, multiplyABCD);
     }
 
     public double calculateVolume(Pyramid pyramid) {
@@ -51,8 +56,8 @@ public class PyramidCalculator {
         Point baseD = pyramid.getPointD();
         Point apexH = pyramid.getApexPoint();
 
-        Point middleBasePoint = calculator.calculateMiddlePoint(baseA, baseC);
-        double pyramidHeight = calculator.calculateLengthBetweenPoints(middleBasePoint, apexH);
+        Point middleBasePoint = calculateMiddlePoint(baseA, baseC);
+        double pyramidHeight = calculateLengthBetweenPoints(middleBasePoint, apexH);
         double baseArea = calculateBaseArea(baseA, baseB, baseC, baseD);
 
         return baseArea * pyramidHeight / 3; // function for volume
@@ -64,14 +69,14 @@ public class PyramidCalculator {
         Point baseC = pyramid.getPointC();
         Point baseD = pyramid.getPointD();
         Point apexH = pyramid.getApexPoint();
-        Point vectorHA = calculator.calculateVector(apexH, baseA);
-        Point vectorHB = calculator.calculateVector(apexH, baseB);
-        Point vectorHC = calculator.calculateVector(apexH, baseC);
-        Point vectorHD = calculator.calculateVector(apexH, baseD);
-        Point vectorAD = calculator.calculateVector(baseA, baseD);
-        Point vectorBC = calculator.calculateVector(baseB, baseC);
-        Point vectorAB = calculator.calculateVector(baseA, baseB);
-        Point vectorCD = calculator.calculateVector(baseC, baseD);
+        Point vectorHA = calculateVector(apexH, baseA);
+        Point vectorHB = calculateVector(apexH, baseB);
+        Point vectorHC = calculateVector(apexH, baseC);
+        Point vectorHD = calculateVector(apexH, baseD);
+        Point vectorAD = calculateVector(baseA, baseD);
+        Point vectorBC = calculateVector(baseB, baseC);
+        Point vectorAB = calculateVector(baseA, baseB);
+        Point vectorCD = calculateVector(baseC, baseD);
 
         List<Point> vectors = Arrays.asList(vectorHA, vectorHB, vectorHC, vectorHD,
                 vectorAD, vectorBC, vectorAB, vectorCD);
@@ -100,8 +105,8 @@ public class PyramidCalculator {
         double firstLengthEdge;
         double secondLengthEdge;
 
-        secondLengthEdge = calculator.calculateLengthBetweenPoints(firstPoint, secondPoint);
-        firstLengthEdge = calculator.calculateLengthBetweenPoints(vector, ZERO_POINT);
+        secondLengthEdge = calculateLengthBetweenPoints(firstPoint, secondPoint);
+        firstLengthEdge = calculateLengthBetweenPoints(vector, ZERO_POINT);
         return secondLengthEdge / firstLengthEdge;
     }
 
@@ -124,27 +129,28 @@ public class PyramidCalculator {
         double resultZ;
         double temp;
 
+
         switch (plane) {
             case XOY:
                 temp = -pointZ / vectorZ;
                 resultX = pointX + vectorX * temp;
                 resultY = pointY + vectorY * temp;
-                resultPoint = new Point(resultX, resultY, 0);
+                resultPoint = new Point(resultX, resultY, COORDINATE_ZERO);
                 break;
             case ZOY:
                 temp = -pointX / vectorX;
                 resultZ = pointZ + vectorZ * temp;
                 resultY = pointY + vectorY * temp;
-                resultPoint = new Point(0, resultY, resultZ);
+                resultPoint = new Point(COORDINATE_ZERO, resultY, resultZ);
                 break;
             case XOZ:
                 temp = -pointY / vectorY;
                 resultX = pointX + vectorX * temp;
                 resultZ = pointZ + vectorZ * temp;
-                resultPoint = new Point(resultX, 0, resultZ);
+                resultPoint = new Point(resultX, COORDINATE_ZERO, resultZ);
                 break;
             default:
-                throw new LogicException(String.format("Not exist cartesian plane %s", plane));
+                throw new IllegalArgumentException(String.format("Not exist cartesian plane %s", plane));
         }
         return Optional.of(resultPoint);
     }
@@ -154,12 +160,85 @@ public class PyramidCalculator {
         double vectorProduct;
 
         if (plane == CartesianPlane.XOY) {
-            vectorProduct = this.calculator.scalarMultiplyVectors(vector, PLANE_VECTOR_XOY);
+            vectorProduct = scalarMultiplyVectors(vector, PLANE_VECTOR_XOY);
         } else if (plane == CartesianPlane.ZOY) {
-            vectorProduct = this.calculator.scalarMultiplyVectors(vector, PLANE_VECTOR_ZOY);
+            vectorProduct = scalarMultiplyVectors(vector, PLANE_VECTOR_ZOY);
         } else {
-            vectorProduct = this.calculator.scalarMultiplyVectors(vector, PLANE_VECTOR_XOZ);
+            vectorProduct = scalarMultiplyVectors(vector, PLANE_VECTOR_XOZ);
         }
         return vectorProduct != 0;
     }
+
+    public Point calculateMiddlePoint(Point firstPoint, Point secondPoint) {
+
+        double firstX = firstPoint.getCoordinateX();
+        double firstY = firstPoint.getCoordinateY();
+        double firstZ = firstPoint.getCoordinateZ();
+        double secondX = secondPoint.getCoordinateX();
+        double secondY = secondPoint.getCoordinateY();
+        double secondZ = secondPoint.getCoordinateZ();
+        double middleX = (firstX + secondX) / 2;
+        double middleY = (firstY + secondY) / 2;
+        double middleZ = (firstZ + secondZ) / 2;
+
+        return new Point(middleX, middleY, middleZ);
+    }
+
+    public double calculateLengthBetweenPoints(Point firstPoint, Point secondPoint) {
+
+        double firstX = firstPoint.getCoordinateX();
+        double firstY = firstPoint.getCoordinateY();
+        double firstZ = firstPoint.getCoordinateZ();
+        double secondX = secondPoint.getCoordinateX();
+        double secondY = secondPoint.getCoordinateY();
+        double secondZ = secondPoint.getCoordinateZ();
+
+        return Math.sqrt((secondX - firstX) * (secondX - firstX) + (secondY - firstY) *
+                (secondY - firstY) + (secondZ - firstZ) * (secondZ - firstZ));
+    }
+
+    public Point calculateVector(Point firstPoint, Point secondPoint) {
+
+        double firstX = firstPoint.getCoordinateX();
+        double firstY = firstPoint.getCoordinateY();
+        double firstZ = firstPoint.getCoordinateZ();
+        double secondX = secondPoint.getCoordinateX();
+        double secondY = secondPoint.getCoordinateY();
+        double secondZ = secondPoint.getCoordinateZ();
+        double vectorX = secondX - firstX;
+        double vectorY = secondY - firstY;
+        double vectorZ = secondZ - firstZ;
+
+        return new Point(vectorX, vectorY, vectorZ);
+    }
+
+    public double scalarMultiplyVectors(Point firstVector, Point secondVector) {
+
+        double firstX = firstVector.getCoordinateX();
+        double firstY = firstVector.getCoordinateY();
+        double firstZ = firstVector.getCoordinateZ();
+        double secondX = secondVector.getCoordinateX();
+        double secondY = secondVector.getCoordinateY();
+        double secondZ = secondVector.getCoordinateZ();
+
+        return firstX * secondX + firstY * secondY + firstZ * secondZ;
+    }
+
+    public Point multiplyVectors(Point firstVector, Point secondVector) {
+
+        double firstX = firstVector.getCoordinateX();
+        double firstY = firstVector.getCoordinateY();
+        double firstZ = firstVector.getCoordinateZ();
+        double secondX = secondVector.getCoordinateX();
+        double secondY = secondVector.getCoordinateY();
+        double secondZ = secondVector.getCoordinateZ();
+
+        double resultX = (firstY * secondZ - firstZ * secondY);
+        double resultY = (firstZ * secondX - firstX * secondZ);
+        double resultZ = (firstX * secondY - firstY * secondX);
+
+        return new Point(resultX, resultY, resultZ);
+    }
+
+
 }

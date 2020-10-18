@@ -1,8 +1,8 @@
 package by.epam.evm.pyramid.data.repository;
 
 import by.epam.evm.pyramid.data.repository.comparator.ComparatorFactory;
-import by.epam.evm.pyramid.data.repository.specification.PyramidSpecification;
 import by.epam.evm.pyramid.data.repository.comparator.ComparatorType;
+import by.epam.evm.pyramid.data.repository.specification.PyramidSpecification;
 import by.epam.evm.pyramid.model.Pyramid;
 
 import java.util.ArrayList;
@@ -11,7 +11,11 @@ import java.util.List;
 
 public class ListPyramidRepository implements PyramidRepository {
 
-    private List<Pyramid> pyramids = new ArrayList<>();
+    private List<Pyramid> pyramids;
+
+    public ListPyramidRepository(List<Pyramid> pyramids) {
+        this.pyramids = pyramids;
+    }
 
     @Override
     public void addPyramid(Pyramid pyramid) {
@@ -29,9 +33,9 @@ public class ListPyramidRepository implements PyramidRepository {
         int id = pyramid.getId();
         Pyramid searchPyramid;
 
-        for(int i = 0; i < pyramids.size(); i++){
+        for (int i = 0; i < pyramids.size(); i++) {
             searchPyramid = pyramids.get(i);
-            if (id == searchPyramid.getId()){
+            if (id == searchPyramid.getId()) {
                 pyramids.set(i, pyramid);
             }
         }

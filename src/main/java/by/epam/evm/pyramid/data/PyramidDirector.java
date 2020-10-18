@@ -12,6 +12,7 @@ import java.util.Optional;
 public class PyramidDirector {
 
     private final static Logger LOGGER = LogManager.getLogger(PyramidDirector.class);
+
     private final DataReader reader;
     private final DataValidator dataValidator;
     private final PointParser parser;
@@ -27,7 +28,7 @@ public class PyramidDirector {
 
     public List<Pyramid> complete() throws DataException {
 
-        List<Pyramid> pyramids = new ArrayList<>();
+        List<Pyramid> validPyramids = new ArrayList<>();
         List<String> data = reader.read();
         List<Point> points;
         Optional<Pyramid> pyramid;
@@ -39,12 +40,12 @@ public class PyramidDirector {
                 pyramid = pyramidCreator.create(points);
                 if (pyramid.isPresent()) {
                     validPyramid = pyramid.get();
-                    pyramids.add(validPyramid);
+                    validPyramids.add(validPyramid);
                 }
             } else {
-                LOGGER.warn(String.format("Data %s line is not valid"), line);
+                LOGGER.warn(String.format("Data %s line is not valid", line));
             }
         }
-        return pyramids;
+        return validPyramids;
     }
 }
