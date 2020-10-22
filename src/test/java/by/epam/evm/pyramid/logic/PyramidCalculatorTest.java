@@ -9,16 +9,12 @@ public class PyramidCalculatorTest {
 
     private final static Point FIRST_VALUE = new Point(2, -2, 4);
     private final static Point SECOND_VALUE = new Point(-4, 4, 4);
-    private final static Pyramid PYRAMID;
-
-    static {
-        Point pointA = new Point(0, 0, 0);
-        Point pointB = new Point(1, 0, 0);
-        Point pointC = new Point(1, 1, 0);
-        Point pointD = new Point(0, 1, 0);
-        Point apex = new Point(0.5, 0.5, 0.7);
-        PYRAMID = new Pyramid(pointA, pointB, pointC, pointD, apex);
-    }
+    private final static Pyramid PYRAMID = new Pyramid(
+            new Point(0, 0, 0),
+            new Point(1, 0, 0),
+            new Point(1, 1, 0),
+            new Point(0, 1, 0),
+            new Point(0.5, 0.5, 0.7));
 
     private final PyramidCalculator calculator = new PyramidCalculator();
 

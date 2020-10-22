@@ -3,7 +3,7 @@ package by.epam.evm.pyramid.data;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class FileDataReaderTest {
@@ -14,9 +14,9 @@ public class FileDataReaderTest {
     public void testReadShouldReadAllStringAndReturnListWhenFileDoesExist() throws DataException {
         //given
         FileDataReader reader = new FileDataReader(FILE_NAME);
-        List<String> expected = new ArrayList<>();
-        expected.add("A<2.3;-3.5;2>B<2;-3.5;5>C<-2;-3;2>D<2.3;-3.5;2>H<2.3;-3.5;2>");
-        expected.add("A<2.3;-3.5;2>B<2;-3.5;5>C<-2;-3;2>D<2.3;-3.5;2>H<2.3;-3.5;2>");
+        List<String> expected = Arrays.asList(
+                "A<2.3;-3.5;2>B<2;-3.5;5>C<-2;-3;2>D<2.3;-3.5;2>H<2.3;-3.5;2>",
+                "A<2.3;-3.5;2>B<2;-3.5;5>C<-2;-3;2>D<2.3;-3.5;2>H<2.3;-3.5;2>");
         //when
         List<String> actual = reader.read();
         //then

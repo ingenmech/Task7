@@ -17,21 +17,14 @@ import static org.mockito.Mockito.when;
 
 public class PyramidDirectorTest {
 
-    private final static List<Point> POINTS;
-    private final static List<String> DATA = new ArrayList<>();
-    private final static Pyramid PYRAMID;
-
-    static {
-        DATA.add("A<2.3;-3.5;2>B<2;-3.5;5>C<-2;-3;2>D<2.3;-3.5;2>H<2.3;-3.5;2>");
-        Point pointA = new Point(2.3, -3.5, 2);
-        Point pointB = new Point(2, -3.5, 5);
-        Point pointC = new Point(-2, -3, 2);
-        Point pointD = new Point(2.3, -3.5, 2);
-        Point pointH = new Point(2.3, -3.5, 2);
-        POINTS = Arrays.asList(pointA, pointB, pointC, pointD, pointH);
-        PYRAMID = new Pyramid(pointA, pointB, pointC, pointD, pointH);
-    }
-
+    private final static Point pointA = new Point(2.3, -3.5, 2);
+    private final static Point pointB = new Point(2, -3.5, 5);
+    private final static Point pointC = new Point(-2, -3, 2);
+    private final static Point pointD = new Point(2.3, -3.5, 2);
+    private final static Point pointH = new Point(2.3, -3.5, 2);
+    private final static List<Point> POINTS = Arrays.asList(pointA, pointB, pointC, pointD, pointH);
+    private final static List<String> DATA = Arrays.asList("A<2.3;-3.5;2>B<2;-3.5;5>C<-2;-3;2>D<2.3;-3.5;2>H<2.3;-3.5;2>");
+    private final static Pyramid PYRAMID = new Pyramid(pointA, pointB, pointC, pointD, pointH);
 
     @Test
     public void testCompleteShouldReturnListPyramidsWhenDataAndPyramidValid() throws DataException {
@@ -47,8 +40,7 @@ public class PyramidDirectorTest {
         when(creator.create(anyList())).thenReturn(optional);
 
         PyramidDirector director = new PyramidDirector(reader, dataValidator, parser, creator);
-        List<Pyramid> expected = new ArrayList<>();
-        expected.add(PYRAMID);
+        List<Pyramid> expected = Arrays.asList(PYRAMID);
 
         //when
         List<Pyramid> actual = director.complete();
@@ -108,7 +100,7 @@ public class PyramidDirectorTest {
 
         PyramidDirector director = new PyramidDirector(reader, dataValidator, parser, creator);
         //when
-        List<Pyramid> actual = director.complete();
+        director.complete();
     }
 
 

@@ -10,18 +10,11 @@ import java.util.List;
 
 public class IdComparatorTest {
 
-    private final static List<Pyramid> PYRAMIDS;
-    private final static Pyramid FIRST_PYRAMID;
-    private final static Pyramid SECOND_PYRAMID;
-    private final static Pyramid THIRD_PYRAMID;
-
-    static {
-        Point point = new Point(2.3, -3.5, 2);
-        FIRST_PYRAMID = new Pyramid(1, point, point, point, point, point);
-        SECOND_PYRAMID = new Pyramid(2, point, point, point, point, point);
-        THIRD_PYRAMID = new Pyramid(3, point, point, point, point, point);
-        PYRAMIDS = Arrays.asList(FIRST_PYRAMID, SECOND_PYRAMID, THIRD_PYRAMID);
-    }
+    private final static Point POINT = new Point(2.3, -3.5, 2);
+    private final static Pyramid FIRST_PYRAMID = new Pyramid(1, POINT, POINT, POINT, POINT, POINT);
+    private final static Pyramid SECOND_PYRAMID = new Pyramid(2, POINT, POINT, POINT, POINT, POINT);
+    private final static Pyramid THIRD_PYRAMID = new Pyramid(3, POINT, POINT, POINT, POINT, POINT);
+    private final static List<Pyramid> EXPECTED = Arrays.asList(FIRST_PYRAMID, SECOND_PYRAMID, THIRD_PYRAMID);
 
     @Test
     public void testCompareShouldSortByIdWhenDataIsCorrect() {
@@ -31,7 +24,7 @@ public class IdComparatorTest {
 
         actualSorted.sort(comparator);
 
-        Assert.assertEquals(PYRAMIDS, actualSorted);
+        Assert.assertEquals(EXPECTED, actualSorted);
     }
 
 }

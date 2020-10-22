@@ -16,21 +16,11 @@ import static org.mockito.Mockito.when;
 
 public class ListPyramidRepositoryTest {
 
-
-    private final static List<Pyramid> PYRAMIDS;
-    private final static List<Pyramid> EXPECTED;
-
-    static {
-        Point point = new Point(1, -3.5, 2);
-        Point firstApex = new Point(1, -3.5, 2);
-        Point secondApex = new Point(2, -3.5, 2);
-        Point thirdApex = new Point(3, -3.5, 2);
-        Pyramid firstPyramid = new Pyramid(1, point, point, point, point, firstApex);
-        Pyramid secondPyramid = new Pyramid(2, point, point, point, point, secondApex);
-        Pyramid thirdPyramid = new Pyramid(3, point, point, point, point, thirdApex);
-        PYRAMIDS = Arrays.asList(firstPyramid, secondPyramid, thirdPyramid);
-        EXPECTED = Arrays.asList(secondPyramid);
-    }
+    private final static Point point = new Point(1, -3.5, 2);
+    private final static Pyramid firstPyramid = new Pyramid(1, point, point, point, point, point);
+    private final static Pyramid secondPyramid = new Pyramid(2, point, point, point, point, point);
+    private final static List<Pyramid> PYRAMIDS = Arrays.asList(firstPyramid, secondPyramid, firstPyramid);
+    private final static List<Pyramid> EXPECTED = Arrays.asList(secondPyramid);
 
     @Test
     public void testQueryShouldReturnPyramidListByIdWhenDataIsValid() {

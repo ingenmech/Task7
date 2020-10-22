@@ -15,16 +15,12 @@ import static org.mockito.Mockito.when;
 
 public class PyramidValidatorTest {
 
-    private final static List<Point> POINTS;
-
-    static {
-        Point pointA = new Point(2.3, -3.5, 2);
-        Point pointB = new Point(2, -3.5, 5);
-        Point pointC = new Point(-2, -3, 2);
-        Point pointD = new Point(2.3, -3.5, 2);
-        Point pointH = new Point(2.3, -3.5, 2);
-        POINTS = Arrays.asList(pointA, pointB, pointC, pointD, pointH);
-    }
+    private final static List<Point> POINTS = Arrays.asList(
+            new Point(2.3, -3.5, 2),
+            new Point(2, -3.5, 5),
+            new Point(-2, -3, 2),
+            new Point(2.3, -3.5, 2),
+            new Point(2.3, -3.5, 2));
 
     @Test
     public void testIsPyramidShouldReturnTrueWhenDataValid() {
