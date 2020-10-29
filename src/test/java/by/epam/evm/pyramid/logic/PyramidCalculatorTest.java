@@ -19,7 +19,7 @@ public class PyramidCalculatorTest {
     private final PyramidCalculator calculator = new PyramidCalculator();
 
     @Test
-    public void testCalculateAreaShouldReturnFullPyramidAreaWhenDataIsCorrect() {
+    public void testCalculateAreaShouldReturnFullPyramidAreaWhenDataIsValid() {
         //given
         double expected = 3.72;
         //when
@@ -29,7 +29,7 @@ public class PyramidCalculatorTest {
     }
 
     @Test
-    public void testCalculateVolumeShouldReturnPyramidVolumeWhenDataIsCorrect() {
+    public void testCalculateVolumeShouldReturnPyramidVolumeWhenDataIsValid() {
         //given
         double expected = 0.47;
         //when
@@ -39,7 +39,7 @@ public class PyramidCalculatorTest {
     }
 
     @Test
-    public void testCalculateMiddlePointShouldReturnMiddlePointWhenDataIsCorrect() {
+    public void testCalculateMiddlePointShouldReturnMiddlePointWhenDataIsValid() {
         //given
         Point expected = new Point(-1, 1, 4);
         //when
@@ -49,7 +49,7 @@ public class PyramidCalculatorTest {
     }
 
     @Test
-    public void testCalculateLengthBetweenPointsShouldReturnLengthWhenDataIsCorrect() {
+    public void testCalculateLengthBetweenPointsShouldReturnLengthWhenDataIsValid() {
         //given
         double expected = 8.49;
         //when
@@ -59,7 +59,7 @@ public class PyramidCalculatorTest {
     }
 
     @Test
-    public void testCalculateVectorShouldReturnVectorPointWhenDataIsCorrect() {
+    public void testCalculateVectorShouldReturnVectorPointWhenDataIsValid() {
         //given
         Point expected = new Point(-6, 6, 0);
         //when
@@ -69,7 +69,7 @@ public class PyramidCalculatorTest {
     }
 
     @Test
-    public void testScalarMultiplyVectorsShouldReturnScalarResultDoubleTypeWhenDataIsCorrect() {
+    public void testScalarMultiplyVectorsShouldReturnScalarResultDoubleTypeWhenDataIsValid() {
         //given
         double expected = 0;
         //when
@@ -79,7 +79,7 @@ public class PyramidCalculatorTest {
     }
 
     @Test
-    public void testMultiplyVectorsShouldReturnVectorCoordinatesTypePointWhenDataIsCorrect() {
+    public void testMultiplyVectorsShouldReturnVectorCoordinatesTypePointWhenDataIsValid() {
         //given
         Point expected = new Point(-24, -24, 0);
         //when

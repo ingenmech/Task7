@@ -10,7 +10,7 @@ import java.util.List;
 public class PointParserTest {
 
     @Test
-    public void testParseShouldReturnListPointWhenDataIsCorrect() {
+    public void testParseShouldReturnListPointWhenDataIsValid() {
         //given
         PointParser parser = new PointParser();
         List<Point> expected = Arrays.asList(

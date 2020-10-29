@@ -15,7 +15,7 @@ public class VolumeRangePyramidSpecification implements PyramidSpecification {
         calculator = new PyramidCalculator();
     }
 
-    // package private for test
+    // package-private for test
     VolumeRangePyramidSpecification(PyramidCalculator calculator, double minVolume, double maxVolume) {
         this(minVolume, maxVolume);
         this.calculator = calculator;

@@ -13,23 +13,20 @@ import java.util.List;
 public class FileDataReader implements DataReader {
 
     private final static Logger LOGGER = LogManager.getLogger(FileDataReader.class);
-    private final String fileName;
-
-    public FileDataReader(String fileName) {
-        this.fileName = fileName;
-    }
 
     @Override
-    public List<String> read() throws DataException {
+    public List<String> read(String fileName) throws DataException {
 
         BufferedReader reader = null;
 
         try {
             reader = new BufferedReader(new FileReader(fileName));
             List<String> data = new ArrayList<>();
-            String line;
-            while ((line = reader.readLine()) != null) {
+            String line = reader.readLine();
+
+            while (line != null) {
                 data.add(line);
+                line = reader.readLine();
             }
             return data;
         } catch (IOException e) {

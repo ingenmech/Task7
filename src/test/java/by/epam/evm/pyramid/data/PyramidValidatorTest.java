@@ -61,12 +61,12 @@ public class PyramidValidatorTest {
         //given
         PyramidCalculator calculator = Mockito.mock(PyramidCalculator.class);
         PyramidValidator validator = new PyramidValidator(calculator);
-        Point pointA = new Point(0, 0, 0);
-        Point pointB = new Point(1, 0, 0);
-        Point pointC = new Point(1, 1, 0);
-        Point pointD = new Point(0, 1, 0);
-        Point apex = new Point(0.5, 0.5, 1);
-        Pyramid pyramid = new Pyramid(pointA, pointB, pointC, pointD, apex);
+        Pyramid pyramid = new Pyramid(
+                new Point(0, 0, 0),
+                new Point(1, 0, 0),
+                new Point(1, 1, 0),
+                new Point(0, 1, 0),
+                new Point(0.5, 0.5, 1));
         //when
         boolean actual = validator.isBaseOnOrdinateSurface(pyramid);
         //then
@@ -78,12 +78,12 @@ public class PyramidValidatorTest {
         //given
         PyramidCalculator calculator = Mockito.mock(PyramidCalculator.class);
         PyramidValidator validator = new PyramidValidator(calculator);
-        Point pointA = new Point(0, 0, 2);
-        Point pointB = new Point(1, 0, 0);
-        Point pointC = new Point(1, 1, 0);
-        Point pointD = new Point(0, 1, 0);
-        Point apex = new Point(0.5, 0.5, 1);
-        Pyramid pyramid = new Pyramid(pointA, pointB, pointC, pointD, apex);
+        Pyramid pyramid = new Pyramid(
+                new Point(0, 0, 2),
+                new Point(1, 0, 0),
+                new Point(1, 1, 0),
+                new Point(0, 1, 0),
+                new Point(0.5, 0.5, 1));
         //when
         boolean actual = validator.isBaseOnOrdinateSurface(pyramid);
         //then

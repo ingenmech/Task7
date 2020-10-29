@@ -82,19 +82,15 @@ public class PyramidCalculator {
                 vectorAD, vectorBC, vectorAB, vectorCD);
         List<Point> vectorPoints = Arrays.asList(apexH, apexH, apexH, apexH, baseA, baseB, baseA, baseC);
 
-        Optional<Point> calculatedPoint;
         double resultRatio = 1;
-        Point vector;
-        Point point;
-        Point tempPoint;
 
         for (int i = 0; i < vectors.size(); i++) {
-            vector = vectors.get(i);
-            point = vectorPoints.get(i);
-            calculatedPoint = calculateIntersection(point, vector, plane);
+            Point vector = vectors.get(i);
+            Point point = vectorPoints.get(i);
+            Optional<Point> calculatedPoint = calculateIntersection(point, vector, plane);
 
             if (calculatedPoint.isPresent()) {
-                tempPoint = calculatedPoint.get();
+                Point tempPoint = calculatedPoint.get();
                 resultRatio *= calculateEdgeRatio(point, tempPoint, vector);
             }
         }

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ListPyramidRepository implements PyramidRepository {
 
-    private List<Pyramid> pyramids;
+    private final List<Pyramid> pyramids;
 
     public ListPyramidRepository(List<Pyramid> pyramids) {
         this.pyramids = pyramids;
@@ -31,10 +31,9 @@ public class ListPyramidRepository implements PyramidRepository {
     public void updatePyramid(Pyramid pyramid) {
 
         int id = pyramid.getId();
-        Pyramid searchPyramid;
 
         for (int i = 0; i < pyramids.size(); i++) {
-            searchPyramid = pyramids.get(i);
+            Pyramid searchPyramid = pyramids.get(i);
             if (id == searchPyramid.getId()) {
                 pyramids.set(i, pyramid);
             }

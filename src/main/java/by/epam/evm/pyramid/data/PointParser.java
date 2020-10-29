@@ -17,23 +17,17 @@ public class PointParser implements Parser {
     public List<Point> parse(String dataPoints) {
 
         List<Point> points = new ArrayList<>();
-        double coordinateX;
-        double coordinateY;
-        double coordinateZ;
-        String data;
-        Point point;
-
         Pattern pattern = Pattern.compile(PYRAMID_PATTERN);
         Matcher matcher = pattern.matcher(dataPoints);
 
         while (matcher.find()) {
-            data = matcher.group(X_COORDINATE);
-            coordinateX = Double.parseDouble(data);
+            String data = matcher.group(X_COORDINATE);
+            double coordinateX = Double.parseDouble(data);
             data = matcher.group(Y_COORDINATE);
-            coordinateY = Double.parseDouble(data);
+            double coordinateY = Double.parseDouble(data);
             data = matcher.group(Z_COORDINATE);
-            coordinateZ = Double.parseDouble(data);
-            point = new Point(coordinateX, coordinateY, coordinateZ);
+            double coordinateZ = Double.parseDouble(data);
+            Point point = new Point(coordinateX, coordinateY, coordinateZ);
             points.add(point);
         }
         return points;
