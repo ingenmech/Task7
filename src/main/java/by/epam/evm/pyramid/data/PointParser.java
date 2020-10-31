@@ -21,12 +21,12 @@ public class PointParser implements Parser {
         Matcher matcher = pattern.matcher(dataPoints);
 
         while (matcher.find()) {
-            String data = matcher.group(X_COORDINATE);
-            double coordinateX = Double.parseDouble(data);
-            data = matcher.group(Y_COORDINATE);
-            double coordinateY = Double.parseDouble(data);
-            data = matcher.group(Z_COORDINATE);
-            double coordinateZ = Double.parseDouble(data);
+            String dataX = matcher.group(X_COORDINATE);
+            double coordinateX = Double.parseDouble(dataX);
+            String dataY = matcher.group(Y_COORDINATE);
+            double coordinateY = Double.parseDouble(dataY);
+            String dataZ = matcher.group(Z_COORDINATE);
+            double coordinateZ = Double.parseDouble(dataZ);
             Point point = new Point(coordinateX, coordinateY, coordinateZ);
             points.add(point);
         }

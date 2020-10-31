@@ -12,7 +12,6 @@ import java.util.Optional;
 public class PyramidDirector {
 
     private final static Logger LOGGER = LogManager.getLogger(PyramidDirector.class);
-    private final static String FILE_NAME = "input.txt";
 
     private final DataReader reader;
     private final DataValidator dataValidator;
@@ -27,20 +26,17 @@ public class PyramidDirector {
         this.pyramidCreator = creator;
     }
 
-    public List<Pyramid> complete() throws DataException {
+    public List<Pyramid> complete(String fileName) throws DataException {
 
         List<Pyramid> validPyramids = new ArrayList<>();
-        List<String> data = reader.read(FILE_NAME);
-        List<Point> points;
-        Optional<Pyramid> pyramid;
-        Pyramid validPyramid;
+        List<String> data = reader.read(fileName);
 
         for (String line : data) {
             if (dataValidator.isValid(line)) {
-                points = parser.parse(line);
-                pyramid = pyramidCreator.create(points);
+                List<Point> points = parser.parse(line);
+                Optional<Pyramid> pyramid = pyramidCreator.create(points);
                 if (pyramid.isPresent()) {
-                    validPyramid = pyramid.get();
+                    Pyramid validPyramid = pyramid.get();
                     validPyramids.add(validPyramid);
                 }
             } else {

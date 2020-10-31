@@ -26,6 +26,7 @@ public class PyramidDirectorTest {
     private final static List<Point> POINTS = Arrays.asList(pointA, pointB, pointC, pointD, pointH);
     private final static Pyramid PYRAMID = new Pyramid(pointA, pointB, pointC, pointD, pointH);
     private final static List<String> DATA = Arrays.asList("A<2.3;-3.5;2>B<2;-3.5;5>C<-2;-3;2>D<2.3;-3.5;2>H<2.3;-3.5;2>");
+    private final static String FILE_NAME = "src/test/resources/inputTest.txt";
 
     @Test
     public void testCompleteShouldReturnListPyramidsWhenDataAndPyramidValid() throws DataException {
@@ -44,7 +45,7 @@ public class PyramidDirectorTest {
         List<Pyramid> expected = Arrays.asList(PYRAMID);
 
         //when
-        List<Pyramid> actual = director.complete();
+        List<Pyramid> actual = director.complete(FILE_NAME);
         //then
         Assert.assertEquals(expected, actual);
     }
@@ -63,7 +64,7 @@ public class PyramidDirectorTest {
         List<Pyramid> expected = new ArrayList<>();
 
         //when
-        List<Pyramid> actual = director.complete();
+        List<Pyramid> actual = director.complete(FILE_NAME);
         //then
         Assert.assertEquals(expected, actual);
     }
@@ -85,7 +86,7 @@ public class PyramidDirectorTest {
         List<Pyramid> expected = new ArrayList<>();
 
         //when
-        List<Pyramid> actual = director.complete();
+        List<Pyramid> actual = director.complete(FILE_NAME);
         //then
         Assert.assertEquals(expected, actual);
     }
@@ -101,7 +102,7 @@ public class PyramidDirectorTest {
 
         PyramidDirector director = new PyramidDirector(reader, dataValidator, parser, creator);
         //when
-        director.complete();
+        director.complete(FILE_NAME);
     }
 
 
